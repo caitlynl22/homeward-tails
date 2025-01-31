@@ -23,7 +23,7 @@
 #  fk_rails_...  (person_id => people.id)
 #  fk_rails_...  (pet_id => pets.id)
 #
-require 'csv'
+require "csv"
 
 class Match < ApplicationRecord
   acts_as_tenant(:organization)
@@ -109,7 +109,7 @@ class Match < ApplicationRecord
   end
 
   def self.to_csv(matches)
-    CSV.generate(headers:true) do |csv|
+    CSV.generate(headers: true) do |csv|
       csv << ["Email"]
 
       matches.each do |match|
