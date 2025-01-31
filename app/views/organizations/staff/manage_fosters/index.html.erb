@@ -8,6 +8,13 @@
     %>
   <% end %>
   <% c.with_body do %>
+    <% if params[:q] %>
+      <%= link_to 'Export CSV', staff_manage_fosters_path({pet_name: params[:q][:pet_name_cont], fosterer_name: params[:q][:person_first_name_or_person_last_name_cont], status: params[:q][:status_eq]}.merge({format: :csv})), class: "btn btn-secondary mb-4" %>
+    <% else %>
+      <%= link_to "Export CSV", staff_manage_fosters_path(format: "csv"),
+        class: "btn btn-secondary mb-4"
+      %>
+    <% end %>
     <section class="pb-5" id="about_us">
         <!-- Ransack Search Form -->
         <div class="mx-1 row p-4 border rounded-5 mb-5 bg-white">
