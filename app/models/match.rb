@@ -23,6 +23,8 @@
 #  fk_rails_...  (person_id => people.id)
 #  fk_rails_...  (pet_id => pets.id)
 #
+require 'csv'
+
 class Match < ApplicationRecord
   acts_as_tenant(:organization)
   belongs_to :pet, touch: true
@@ -104,6 +106,16 @@ class Match < ApplicationRecord
 
   def retire_applications(application_class: AdopterApplication)
     application_class.retire_applications(pet_id: pet_id)
+  end
+
+  def self.to_csv(matches)
+    CSV.generate(headers:true) do |csv|
+      csv << ["Email"]
+
+      matches.each do |match|
+        csv << [match.person.email]
+      end
+    end
   end
 
   private

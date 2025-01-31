@@ -36,6 +36,11 @@ class Organizations::Staff::ManageFostersController < Organizations::BaseControl
       limit: 10
     )
     @foster_pets = paginated_fosters.group_by(&:pet)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Match.to_csv(@q.result), filename: "foster_emails-#{Date.today}.csv" }
+    end
   end
 
   def edit
