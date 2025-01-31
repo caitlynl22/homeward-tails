@@ -60,6 +60,15 @@ class Organizations::Staff::ManageFostersControllerTest < ActionDispatch::Integr
               get staff_manage_fosters_url
             end
           end
+          should "generate CSV with fosterers' emails" do
+            foster = create(:foster)
+
+            get staff_manage_fosters_url, params: {format: :csv}
+
+            assert_response :success
+            assert_includes response.header['Content-Type'], 'text/csv'
+            assert_includes response.body, foster.person.email
+          end
         end
       end
     end
